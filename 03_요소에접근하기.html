@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .area{
+            border: 1px solid black;
+            width: 300px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>HTML 요소에 접근하기(해당 요소 객체 가져오기)</h1>
+    
+    <h3>1) 아이디를 이용해서 요소 가져오기</h3>
+    <div id="area1" class="area">area1영역</div>
+    <button onclick="accessId()">아이디로 접근</button>
+
+    <script>
+        function accessId() {
+            // 아이디로 요소 가져올 때
+            // document.getElementById("아이디명"); => 선택된 요소 객체 반환
+
+            let area1 = document.getElementById("area1");
+
+            // 선택한 요소의 속성값을 가져오거나 변경 가능
+            // 속성에 접근하고자 할 때 => 선택된 요소.접근하고자 하는 속성
+            area1.innerHTML += "아이디로 접근 성공! <br>";
+            
+            area1.style.background = "red";
+            area1.style.color = "white";
+            area1.style.width = "200px";
+            area1.style.height = "200px";
+            // 여기서 속성을 바꿔주는 것은 인라인과 같은 우선순위, 굉장히 우선시 되므로 별로 추천하지 않음
+            // 클래스를 부여해서 속성을 넣어주는 것이 바람직함
+        }
+    </script>
+    <div id="area2" class="area"></div>
+    <button onclick="changeColor();">클릭마다 색상 변경</button>
+
+    <script>
+        function changeColor(){
+            // 버튼이 클릭될 때마다 배경 색상을 노랑->빨강 반복해서 바꿔주세요
+            
+            // if문으로 클릭 횟수 체크해서 홀수면 노랑 짝수면 빨강...?
+
+            // 배경색상이 노랑이면 빨강으로, 빨강이면 노랑으로 바꿔야 함
+
+            let area2 = document.getElementById("area2");
+            if(area2.style.background != 'yellow') {
+                area2.style.background = 'yellow';
+            } else {
+                area2.style.background = 'red';
+            }
+        }
+    </script>
+
+    <h3>2) 태그명을 이용해서 요소 가져오기</h3>
+    <ul>
+        <li>안녕하세요</li>
+        <li>안녕하세요</li>
+        <li>안녕하세요</li>
+        <li>안녕하세요</li>
+        <li>안녕하세요</li>
+    </ul>
+
+    <button onclick="accessTagName()">태그명으로 접근</button>
+    <!-- 가져올 수 있는 게 몇 개냐 -->
+    <script>
+        function accessTagName(){
+            // 태그명으로 요소 가져올 때
+            // document.getElementsByTagName("태그명"); => 선택된 요소 객체들이 배열로 반환
+            // id는 고유해서 한 가지 값(값 or null)이고, 태그는 여러 가지 값일 수 있음 => return 값이 배열
+        
+            let list = document.getElementsByTagName('li'); // [li, li, li ...]
+            console.log(list);
+            // getElementByTagName은 자료형이 배열로 나옴
+            console.log("배열의 길이 : " + list.length);
+            console.log("첫 번째 요소 : " + list[0]);
+            // 결과 object HTMLLIElement : 객체 자체를 출력하라고 나왔기 때문에 출력하는 결과
+            console.log("첫 번째 요소 : " + list[0].innerHTML);
+
+            for(let i = 0; i < list.length; i++) {
+                list[i].innerHTML = (i + 1) + "번째 li요소입니다.";
+                list[i].style.color = "red";
+            }
+        }
+    </script>
+
+    <br>
+
+    <h3>3) name 속성값을 이용해서 요소 가져오기</h3>
+    <!-- <form action="">
+        <fieldset>
+            <legend>취미</legend>
+            <input type="checkbox" name="hobby" value="전체선택" id="all">
+            <label for="all">전체 선택</label>
+            <input type="checkbox" name="hobby" value="게임" id="game">
+            <label for="game">게임</label>
+            <input type="checkbox" name="hobby" value="영화" id="movie">
+            <label for="movie">영화</label>
+            <input type="checkbox" name="hobby" value="음악" id="music">
+            <label for="music">음악</label>
+        </fieldset>
+    </form>
+
+    <br>
+
+    <div id="area3" class="area"></div>
+    <button onclick="accessName()">name으로 접근</button>
+    <script>
+        function accessName(){ 
+            // name 속성으로 요소 가져올 때
+            // document.getElementsByName("name 속성값"); => 선택한 속성값을 가진 요소의 배열 반환
+            // 가져올 속성이 몇 개인가? => 전체 선택이면 4개를 다 가져오게 됨
+            let hobbyList = document.getElementsByName("hobby");
+            console.log(hobbyList);
+
+            // for each와 똑같은 구문
+            // for(String s : strList){}
+            // for of 구문 : 배열 값을 하나씩 꺼내서 담아줄 것
+
+            let area = document.getElementById("area3");
+            area.innerHTML = "";
+            // 다시 반복했을 때 값이 쌓이는 게 문제이므로 비워주면 됨
+
+            for(let checkbox of hobbyList){
+                console.log(checkbox);
+                if (checkbox.checked){
+                    area.innerHTML += (checkbox.value + "<br>");
+                    // checkbox에 담긴 것이 true일 때 그 value를 area div의 영역에 innerHTML로 넣어라
+                }
+            }
+            
+
+            // onclick은 정말 클릭 자체가 문제임
+            // 하지만 button을 눌렀을 때 속성값이 true냐 false냐로 바뀌는 것이 문제임
+            // => onchange
+         }
+    </script>
+    -->
+
+    <!-- 전체 선택 -->
+<form action="">
+    <fieldset>
+        <legend>취미</legend>
+        <input type="checkbox" name="hobby" value="전체선택" id="all" onchange="allCheck()">
+        <label for="all">전체 선택</label>
+        <input type="checkbox" name="hobby" value="게임" id="game" onchange="checkBoxTrigger()">
+        <label for="game">게임</label>
+        <input type="checkbox" name="hobby" value="영화" id="movie" onchange="checkBoxTrigger()">
+        <label for="movie">영화</label>
+        <input type="checkbox" name="hobby" value="음악" id="music" onchange="checkBoxTrigger()">
+        <label for="music">음악</label>
+    </fieldset>
+</form>
+
+<br>
+
+<div id="area3" class="area"></div>
+<script>
+    function allCheck(){
+        let allCheckBox = document.getElementById('all');
+        // console.log(allCheckBox.checked);
+
+        let hobbyList = document.getElementsByName("hobby");
+        for(let checkbox of hobbyList) {
+            checkbox.checked = allCheckBox.checked;
+        }
+    }
+    function checkBoxTrigger(){
+        // console.log("변화감지함")
+
+        // 전체 체크박스 이외의 체크박스들의 상태에 따라서 전체 체크박스를 true, false로 변경하고 싶다.
+        // true : 나머지 모든 체크 박스가 true일 때 true
+        // false : 하나라도 false라면 false
+
+        let allCheck = true;
+
+        let hobbyList = document.getElementsByName('hobby');
+        for(let checkBox of hobbyList) {
+            if (checkBox.value == "전체선택") {
+                continue;
+            }
+            // checkBox 중 한 개라도 checked가 false라면 전체 선택 체크박스의 checked는 false여야 함
+            if(!checkBox.checked) {
+                allCheck = false;
+            }
+        }
+
+        let allCheckBox = document.getElementById("all");
+        allCheckBox.checked = allCheck; //true, false
+    }
+    // 전체 체크박스 이외의 체크박스를 클릭 했을 때 (이벤트)
+    </script>
+
+    <h3>4) Class로 접근</h3>
+    <div class="test"></div>
+    <p class="test"></p>
+    <ul class="test">
+        <li></li>
+        <li></li>
+    </ul>
+    <pre class="test test1 test2"></pre>
+    <button onclick="accessClass()">class로 접근</button>
+
+    <script>
+        function accessClass(){
+            // class 속성으로 요소 가져올 때
+            // document.getElementsByClassName("클래스 속성값"); => 선택된 요소들의 배열 반환
+            let arr = document.getElementsByClassName('test');
+            console.log(arr);
+            
+            for(let unit of arr) {
+                unit.innerHTML = 'test를 가지고 있는 요소';
+            }
+        }
+    </script>
+
+    <h5>5) 내가 원하는 요소 자유자재로 가져오기(선택자 활용)</h5>
+    <div id="tmp1">테스트입니다.</div>
+    <div class="tmp2">
+        <h2>안녕하세요.</h2>
+        <h2>오즈입니다.</h2>
+    </div>
+    <span>span</span>
+    <h2>오즈!</h2>
+    <br>
+
+    <button onclick="accessSelector()">클릭</button>
+
+    <script>
+        function accessSelector(){
+            // 선택자를 이용해서 요소를 가져오고자 할 때
+            // document.querySelector("선택자"); => 선택된 요소 한 개만 반환
+            // document.querySelectorAll("선택자"); => 선택된 요소 객체들을 배열에 담아서 반환
+
+            // const divT1 = document.getElementById("tmp1");
+            // 무조건 아이디를 통해 찾겠다는 뜻
+            // 사용자가 함수 사용 시 아이디로 찾을지 클래스일지 그 안의 자손일지 모름
+        
+            const divT1 = document.querySelector("#tmp1"); // div
+            // 전체 중에 가장 빨리 찾은 하나의 결과만 반환
+            // 아이디처럼 고유한 것을 찾을 때 CSS선택자를 통해 가져올 수 있음
+
+            const h2E1 = document.querySelectorAll(".tmp2>h2"); // [h2, h2]
+            // 모든 h2를 배열에 담아 보여줌, 만약 하나만 찾아도 하나의 값이 배열에 담김
+
+            const spanE1 = document.querySelector(".tmp2+span"); // span
+            // 하나 가져올 땐 배열로 굳이 담을 필요 없으므로 하나만 찾는 게 편함
+
+            console.log(divT1);
+
+            for(let el of h2E1) {
+                console.log(el);
+            }
+
+            console.log(spanE1);
+
+            const h2Tmp = document.querySelector("span+h2");
+            h2Tmp.innerHTML = "안녕";
+            // 내용 바꿔준 것
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>변수와 자료형</h1>
+    <h2 id="description">변수 선언 시 var 뿐만 아니라 let, const 이용해서 선언 가능</h2>
+
+    <!-- 버전 차이, 단점이 있어서 보완하려고 나온 것 -->
+
+    <script>
+        // 변수 선언 방법은 
+        var tmp1;
+        let tmp2;
+        const tmp3 = "jisoo";
+        // const는 상수, 무조건 값을 초기화 해줘야 함
+        // 도중에 값을 바꿀 수 없음
+
+        var name = "이지수";
+        console.log(name);
+
+        var age = 45;
+        var pi = 3.14;
+        // 구분 없이 넣을 수 있음
+        var age = 50;
+        // 같은 이름의 변수로 만드는 것이 가능함
+        // 문제가 되는 경우가 있음
+        // 구분이 없이 오류도 없으므로 실수 했을 때 안 알려주니까 찾아내기가 힘듦
+        // es6부터는 let을 만들어서 재정의가 안 되도록 하자고 함
+        
+        /**
+         * let은 var에서 같은 이름의 중복 생성을 하지 못하게 만든 자료형
+         * 다만 let과 var는 모두 값을 변경하는 것은 가능함
+         */
+
+         /*
+        let name2 = "이지수";
+        let name2;
+        // console 창에서 오류로 알려줌
+        name = "전은지";
+        // 당연히 값을 덮어씌우는 게 가능함
+        // 값을 덮어씌우면 안 되는 것이 있음 => const
+        // 하지만 const도 속성은 변경 가능함
+
+        let h2E1 = document.getElementById("test");
+        */
+
+        /**
+         * const는 상수를 표현하기 위한 자료형
+         * 값을 변경할 수 없음
+         */
+        
+         const name3 = "이지수";
+         name3 = "전은지";
+         console.log(name3);
+
+         let h2E12 = document.getElementById("test");
+         h2E12.innerHTML = "??";
+
+        // 변수 자체에 다른 값을 넣을 수 없는 것, 속성은 당연히 변경 가능
+
+        // 요소를 가져오는 건 다른 변수를 가져올 수 있는 가능성이 별로 없음 => const로 사용하는 것이 좋음
+
+        /**
+         * Naming
+         * 1) 일반적으로 영어를 사용하며 문자와 숫자 모두 가능함
+         * 2) 특수문자 중에서는 $와 _ 사용할 수 있음 (나머지는 안 됨)
+         * 3) 숫자로 변수명을 시작할 수 없음
+         * 4) 키워드를 변수명으로 사용할 수 없음
+         *    ex) var, let, const, document
+         * 
+         * Naming Type
+         * 1) camelCase -> 대부분의 언어에서 많이 사용하며 단어의 시작마다 대문자로 구분 해줌
+         * 2) snake_case -> 파이썬에서 주로 사용하며 단어의 시작마다 _로 구분해줌
+         */ 
+
+    </script>
+</body>
+</html>

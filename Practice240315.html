@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1) document.write() -->
+    <button onclick="method1()">화면에 출력</button>
+    <script>
+        function method1(){
+            let str = "<h1>너무 하기 싫다...</h1>";
+            
+            document.write(str);
+        }
+    </script>
+
+    <br><br>
+
+    <!-- element(요소) 안의 값(content) 을 사용 및 변경 -->
+    <!-- innerHTML, innerText라는 속성에 접근하는 것 -->
+
+    <div id="area1">
+        안녕하세요.
+    </div>
+    <button onclick="method2()">확인</button>
+    <button onclick="method3()">확인</button>
+    <script>
+        function method2(){
+            let divS1 = document.getElementById("area1");
+            divS1.innerHTML = "<h1>변경되었습니다.</h1>"
+        }
+        function method3(){
+            let divS1 = document.getElementById("area1");
+            divS1.innerText = "<h1>변경되었습니다.</h1>"
+        }
+    </script>
+
+    <br><br>
+
+    <div id="area2"></div>
+    <button onclick="method4()">confirm</button>
+
+    <script>
+        function method4(){
+            let result = confirm("질문내용 : 알림창 발생");
+            let divS2 = document.getElementById("area2");
+            
+            // 사용자가 confirm의 결과를 확인으로 하면 true, 취소로 하면 false 반환
+            if (result){
+                divS2.innerHTML = "<h3>확인 결과</h3>"
+            } else {
+                divS2.innerHTML = "<h3>취소 결과</h3>"
+            }
+        }
+    </script>
+
+    <br><br>
+
+    <div id="area3"></div>
+    <button onclick="login()">로그인</button>
+
+    <script>
+        function login(){
+            let userId = prompt("아이디를 입력하세요.");
+            let divS3 = document.getElementById("area3");
+
+            divS3.innerHTML = userId + "님, 환영합니다!";
+        }
+    </script>
+    <!-- prompt() 반환형은 String -->
+    <!-- confirm() 반환형은 boolean -->
+    <!-- 메소드에 커서 올려보면 어떤 자료형으로 나오는지 다 써져 있음 -->
+    
+</body>
+</html>

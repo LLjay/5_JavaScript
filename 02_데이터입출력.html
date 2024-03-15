@@ -6,6 +6,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .area{
+            border: 1px solid black;
+            width: 300px;
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
     <h1>자바 스크립트에서의 데이터 입출력</h1>
@@ -17,6 +24,7 @@
                 -->
 
      <!-- window.alert() 등의 함수를 쓸 때 window. 을 생략해 alert()로 사용 가능 -->
+     <!-- 자바 스크립트에 내장되어 있는 객체들 window, document -->
      
      <script>
         window.console.log(); 
@@ -24,5 +32,174 @@
      </script>
 
      <h2>1. 데이터를 출력하는 구문</h2>
+     <p>
+        1) [window.]alert("/팝업에/출력하고자 하는 문구"); <br>
+        <!-- 쌍따옴표와 따옴표 둘 다 기능적인 면에서 차이가 없음 -->
+        2) [window.]console.log("콘솔창에 출력하고자 하는 문구"); <br>
+        3) document.write("화면 상에 출력하고자 하는 문구");
+        4) 선택한 요소.innerHTML | 선택한요소.innerText = "요소에 출력할 문구";
+    </p>
+
+    <!-- 자바스크립트 안의 요소들을 변수에 담을 수 있음(돔?) -->
+    <!-- 돔 : 자바 스크립트 요소를 화면에 표현한 것 -->
+    <!-- html은 인터프리터지만 화면에 전체를 띄워줄 때 어쨌든 코드를 다 읽어서 실행해야 띄워줄 수 있으므로 처음부터 끝까지 읽어들임 -->
+    <!-- 사용자에게 출력하는 구문은 아니고 개발자에게 전하고 싶은 것이 있을 때 콘솔창 사용 -->
+
+    <h3>3) document.write("화면 상에 출력하고자 하는 문구");</h3>
+    <button onclick="documentWrite()">화면에 출력</button>
+    <script>
+        function documentWrite(){
+            // 출력할 문구에 html 태그가 있을 경우 해석해서 시각적인 요소로 보여짐
+            let str = "<table border='1'>"
+                + "<tr>"
+                + "<td>1</td>"  
+                + "<td>2</td>"
+                + "</tr>"
+                + "</table>";
+                    // 개행했을 때 쌍따옴표를 지우면 인식하지 못함, 개행하면 +로 이어줘야 함
+                document.write(str);
+        }
+    </script>
+    <!-- 스크립트가 html 요소를 해석해서 다른 것으로 변경해주고 추가해주고 삭제해주는 것 -->
+
+    <br><br>
+
+    <h3>4) 선택한 요소.innerHTML | 선택한요소.innerText = "요소에 출력할 문구";</h3>
+    <div class="area" id="area1">
+        자바 스크립트에서 어떤 요소(element)안의 값(content)을 가지고 온다거나 <br>
+        변경 하고자 할 때 <b>innerHTML, innerText</b> 라는 속성에 접근
+    </div>
+    <button onclick="tagValue()">확인</button>
+    <!-- 실행하면 연결된 자바 스크립트 중에 이 함수가 있는지를 찾게 됨 -->
+    <script>
+        function tagValue(){
+            // 위의 div 요소를 가져와서 안의 값을 확인 / 변경
+
+            // div 요소 객체를 가져와서 변수에 담아두기
+            let divE1 = document.getElementById("area1");
+            console.log(divE1);
+            // html한테 아이디가 area1인 요소를 찾아서 가져와 라고 명령하는 것 => 문서 내에서 다시 검색해서 요소를 찾을 것 => 변수에 담기
+
+            // 선택된 요소의 속성에 접근 가능(.을 통해서)
+            console.log(divE1.id); // id : 해당 요소의 아이디 속성
+            console.log(divE1.className); // className : 해당 요소의 클래스 속성
+            // 클래스를 가져오려면 클래스 네임으로 가져와야 함
+
+            console.log(divE1.innerHTML); // innerHTML : 요소의 content 영역 안의 html까지 전부 포함해서 가져온다
+            console.log(divE1.innerText); // innerText : 요소의 content 영역 안의 텍스트만 포함해서 가져온다(html x)
+        
+            divE1.innerHTML = "<b>innerText로 속성값 변경함</b>";
+            // 데이터값 자체가 아니라 브라우저에 떠있는 요소를 변경해준 것
+
+            divE1.style.backgroundColor = "yellow";
+        }
+        // 코드 블로킹 : 자바 스크립트는 에러가 나면 실행하지 않는다?
+        // null이라 실행할 수 없다?
+        // 콘솔창에서 어디서 에러가 났는지 알 수 있음
+        
+    </script>
+
+    <hr>
+
+    <h2>2. 데이터를 입력 받는 구문(변수에 기록)</h2>
+    <p>
+        1) 변수 = [window.]confirm("질문내용"); <br>
+        2) 변수 = [window.]prompt("질문내용"); <br>
+        3) 변수 = 선택한요소.속성(id, className, innerText ...) <br>
+        4) 선택한 input요소.value
+    </p>
+
+    <h3>1) [window.]confirm("질문내용");</h3>
+    <p>
+        confirm 호출 시 "질문내용"과 확인/취소 버튼이 존재하는 알림창 발생 <br>
+        확인 버튼 클릭 시 true, 취소 버튼 클릭 시 false를 반환
+    </p>
+
+    <button onclick="testConfirm();">클릭</button>
+    <div id="area2"></div>
+
+    <script>
+        function testConfirm(){
+            let result = confirm("졸리면 확인, 아니면 취소를 누르세요.");
+            // console.log(result);
+
+            let divE2 = document.getElementById("area2");
+            if(result){
+                divE2.innerHTML = "<h3>정신 차리세요</h3>"
+            } else {
+                divE2.innerHTML = "<h3>Good!</h3>"
+            }
+        }
+    </script>
+    <!-- alr + shift + f => 코드 정렬 -->
+    <!-- 만약 코드 정렬 시 깃에 올리면 모든 코드가 바뀌었다고 인식하게 됨 -->
+    <!-- 같은 코드를 수정하면 서로 충돌한다고 인식하게 됨 -->
+    <!-- 하나를 기준으로 덮어쓰다보면 코드가 사라지는 것 -->
+
+    <!-- 이벤트 내용 결과에 따라 무언가를 해줄 수 있는 게 동적페이지 -->
+
+    <br>
+
+    <h3>2) [window.]prompt("질문내용");</h3>
+    <p>
+        prompt 호출 시 "질문내용"과 입력할 수 있는 "텍스트 상자" 와
+        "확인/취소" 버튼이 보여지는 알림창 발생 <br>
+        확인 버튼 클릭 시 텍스트 상자에 입력되어 있는 값이 문자열로 반환
+        취소 버튼 클릭 시 null을 반환(값을 입력 했더라도 취소를 클릭 시 null 반환)
+    </p> 
+
+    <button onclick="testPrompt()">클릭</button>
+    <div id="area3"></div>
+
+    <script>
+        function testPrompt(){
+            let name = prompt("당신의 이름은 무엇입니까?");
+            console.log(name);
+            let age = prompt("당신의 나이는 몇 살입니까?");
+            // console.log(age);
+            // console.log(typeof 22);
+            // for(let i = 0; i < age; i++){
+            //     console.log(i + " ");
+            // }
+            // + " " 때문에 String으로 인식함, 하지만 자료형을 알아서 숫자로 변환해줘서 for문이 도는 것
+            // 프롬프트에서 나오는 것은 전부 다 String이다, 하지만 자료형이 바뀐 것을 인식하지 못할 만큼 유연하게 반응해준다
+        
+                let divE3 = document.getElementById("area3");
+                divE3.innerHTML = "당신은 " + age + "살 <b>" + name + "</b>이시군요.";
+        }
+        // 자바 스크립트에도 자료형은 있음, 다만 컴퓨터가 판단해서 변수의 자료형을 알맞게 넣어줄 뿐
+    </script>
+
+    <br><br>
+
+    <h3>4) 선택한 input요소.value</h3>
+
+    아이디 : <input type="text" id="userId"> <br>
+    비밀번호 : <input type="password" id="userPwd"> <br>
+
+    <button onclick="testInput()">클릭</button>
+    <br>
+    <input type="text" id="area4">
+
+    <script>
+        function testInput(){
+            let input1 = document.getElementById("userId");
+            let input2 = document.getElementById("userPwd");
+
+            console.log(input1.value);
+            console.log(input2.value);
+            // 변수 안의 값에 접근할 때는 value를 사용
+
+            document.getElementById("area4").value = input1.value + ", " + input2.value;
+            // let input3 = document.getElementById("area4");
+        
+            input1.value = "";
+            input2.value = "";
+            // 위에서부터 아래로 메소드가 차례대로 실행 되니까 아이디와 비밀번호를 출력한 후 다시 input1, 2의 값을 null로 넣어줌
+            // value로 넣어준 이유는 input에 value 속성이 있기 때문에, div 같은 것들은 innerHTML과 innerText로 넣어주는 것
+        }
+        // value랑 요소랑 정확히 차이가 뭐지
+    </script>
+
 </body>
 </html>
