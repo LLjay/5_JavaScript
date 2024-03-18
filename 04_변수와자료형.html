@@ -78,5 +78,211 @@
          */ 
 
     </script>
+
+    <h3>* 자료형</h3>
+    <p>
+        변수 선언 시 자료형을 별도로 지정하지 않음(자료형의 개념이 없는 건 아님)
+        <!-- 인터프리어 언어이기 때문에 그때그때 메모리 공간을 확보해서 넣어주는 것 -->
+        => 한 줄씩 실행 되는 인터프리터 언어 특성 상 변수에 대입 되는 값에 따라서 알아서 자료형이 결정 된다.
+    </p>
+
+    <h4>자바스크립트 자료형</h4>
+    <ul>
+        <li>Number(숫자)</li>
+        <li>String(문자열)</li>
+        <li>Boolean(true/false)(불리언)</li>
+        <li>undefines(언디파인드)</li>
+        <!-- 자바에서는 변수를 사용해놓고 만들지 않으면 에러가 남 -->
+        <!-- 한줄한줄 읽기 때문에 다 실행은 함
+            개발자가 변수를 일부러 사용하지 않은 것인지 실수로 사용하지 않은 것인지 구분할 수 있어야 함 -->
+        <li>null(널)</li>
+        <!-- 똑같이 개발자가 알고 비워놓는 것 -->
+        <li>Symbol(심볼)</li>
+        <!-- 임의의 값 / 자바 스크립트에서는 객체를 Map 형태로, Key Value 형태로 저장 -->
+        <!-- Key Value를 다시 정의하면 값을 덮어씌움, 하지만 Symbol은 ????? 똑같은 이름의 객체를 다시 만들 수 있음? -->
+        <li>Object(객체)</li>
+        <!-- Function, Array, Object -->
+    </ul>
+    <button onclick="typeTest();">자료형 테스트</button>
+    <script>
+        function typeTest(){
+            // Number
+            const age = 55;
+            const temperature = -10;
+            const pi = 3.141592;
+
+            console.log(typeof 55);
+            // console.log(typeof(55)); 가능
+            console.log(typeof temperature);
+            console.log(typeof pi);
+
+            const infinity = Infinity;
+            const nInfinity = -Infinity;
+
+            console.log(infinity);
+            console.log(typeof infinity);
+            console.log(nInfinity);
+            console.log(typeof nInfinity);
+            // 수렴?
+
+            // String
+            /**
+             * 1) newline => \n
+             * 2) tab => \t
+             * 3) \ => \\
+             * */
+
+            const str = "안녕하세요. \n \t 나이는 30살입니다.";
+            console.log(typeof str);
+
+            const name = "이지수";
+            console.log("안녕하세요. " + name + "입니다.");
+            // 보통 특정 텍스트일 경우가 많음 => 이런 식으로 따로 넣어줘야 함
+
+            console.log('안녕하세요. ' + name + '입니다.');
+            console.log(`안녕하세요. ${name}입니다.`)
+            // 백팁 안에 달러+중괄호+변수명을 이용하면 이 자리에 들어가게 됨
+            // 쌍따옴표가 문자열 안에 들어가는 경우가 아주 많음
+            // 따라서 자주 사용하게 됨
+            // 키 값을 더 큰 문자열로 만든다?
+
+            // Boolean
+            const isTrue = true;
+            const isFalse = false;
+            console.log(typeof isTrue);
+            console.log(typeof isFalse);
+            
+            // const name;
+            // if (isTrue){}
+            // 대입한 값이 null값일 수 있음
+            // 만약 name 안에 값이 있다면 true로 반환해줘 형태로 많이 사용
+
+
+            /**
+             * undifined
+             * 
+             * 개발자가 직접 값을 초기화 하지 않았을 때 지정되는 값
+             * => undifined를 직접 넣어주는 것은 지양해야 함 
+             */
+
+            //  const num; const는 처음에 무조건 값을 지정해 변하지 않는 값이므로 undefined가 될 수 없음
+            
+            let num;
+            console.log(num);
+            console.log(typeof num);
+
+            /**
+             * null
+             * 
+             * undefined와 마찬가지로 값이 없다는 뜻
+             * 다만 js에서는 개발자가 명시적으로 없는 값을 초기화 할 때 사용
+             */
+
+            let init = null;
+            console.log(init);
+            console.log(typeof init);
+            /**
+             * Symbol
+             * 
+             * 유일무이한 값을 생성할 때 다른 원시값들과 다르게 Symbol 함수를 호출해서 사용
+             */
+
+            const tmp1 = '1';
+            const tmp2 = '1';
+            console.log(tmp1 == tmp2); // ==로 비교 시 값만 String으로 변환해서 비교
+            //  == : 순전히 값만 비교
+            console.log(tmp1 === tmp2); // 자료형까지 그대로 비교
+            // 나중에 가면 ==이 훨씬 편해짐, 하지만 ===가 정확
+
+            const tmp3 = Symbol('1');
+            const tmp4 = Symbol('1');
+            console.log(tmp3 === tmp4);
+            // 아마도 참조주소값을 비교한 것일 것
+
+            // const obj = {
+            //     name : "이지수",
+            //     age : 44
+            // }
+            // // 이런 식으로 키 값으로 보내는 경우가 많음 (Map 형태)
+            // obj.name = "전은지";
+            // obj["name"] = "전은지";
+
+            /**
+             * Object
+             * 
+             * Map
+             * Key : Value 쌍으로 이루어져 있음
+             * key : Value
+             */
+
+            // Map은 자료구조 => 자바에서 코드 덩어리를 받아줄 게 또 필요해짐 => xml 양식
+            // xml 단점 : 키 값을 중복으로 넣을 수 있음 => 복잡해짐
+
+            const dictionary = {
+                red : "빨간색",
+                orange : "주황색",
+                yellow : "노란색"
+            }
+            console.log(dictionary.red);
+            console.log(dictionary['orange']);
+            console.log(typeof dictionary);
+            dictionary.red = "붉은색";
+            dictionary['orange'] = "주황색";
+            dictionary.blue = "파란색";
+            // 밸류를 추가해줄 수 있음
+            console.log(dictionary);
+
+            // Array - 값을 리스트로 나열할 수 있는 타입
+            // (배열은 길이가 정해져 있다)
+            // 자바 스크립트의 Array는 자동으로 늘었다 줄었다가 가능함
+
+            const strArr = []; // []
+            strArr.push("빨간색"); // [빨간색]
+            strArr.push("주황색"); // [빨간색, 주황색]
+            // .puch : 배열에 값을 넣는 것
+            console.log(strArr);
+            console.log(strArr.pop()); // [빨간색]
+            // .pop : 맨 뒤의 값을 빼는 것
+            console.log(strArr);
+            strArr[0] = "노랑색"; // [노랑색]
+            console.log(strArr[0]);
+            console.log(strArr.length);
+
+            const customerList = [];
+            customerList.push({
+                name : "이지수",
+                age : 47,
+                gender : "여"
+            })
+            // 배열에 json 구조 자체를 넣는 것
+
+            console.log(customerList);
+            // 배열 안에 Map이 있는 형식을 가장 많이 사용
+
+            customerMenu(customerList);
+            // 데이터와 UI를 분리해주는 것이 필요
+            // 리액트는 무조건 자바 스크립트로 변환된 후 돌게 됨 
+            // => 좀 더 느림, 하지만 자동으로 처리해주는 것이 있으므로 프로그램이 ? 리액트가 더 빠름
+
+            function customerMenu(customerList){
+                const customerUl = document.createElement('ul'); // Element 요소를 생성하는 것
+                const customerMenu = "<ul>";
+                    for (let i = 0; i < customerList.length; i++) {
+                        let customer = customerList[i];
+                        const customerInfo = `<li>이름 : ${customer.name}</li>` +
+                                             `<li>나이 : ${customer.age}</li>` +
+                                             `<li>성별 : ${customer.gender}</li>`;
+                        customerMenu += customerInfo;
+                    }
+
+                    // 화면에 보여줄 것을 만드는 것, 실제 데이터 구조는 customerList
+                    // json 구조...
+
+                    customerInfo += "</ul>";
+            }
+        }
+
+        
+    </script>
 </body>
 </html>

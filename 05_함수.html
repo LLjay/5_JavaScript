@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .area{
+            border: 1px solid black;
+            width: 500px;
+            height: 100px;
+            background-color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+    <h1>함수(function)</h1>
+
+    <h3 onclick="test1()">*선언적 함수</h3>
+    <pre>
+        function 함수명([매개변수, 매개변수...]){
+            해당 함수 호출 시 실행할 코드;
+
+            [return 결과값;]
+            <!-- 자료형을 자동으로 정해주기 때문에 반환형이 없는 것 -->
+        }
+    </pre>
+    <!-- 태그에 적용 가능 -->
+    <!-- 함수는 기능의 재사용성, 기능은 무조건 하나여야 함 -->
+    <!-- 이 이벤트가 발생하면 이 기능을 실행해줘 -->
+
+    <button id="test1" onclick="test1();">실행 확인</button>
+    <div id="area1" class="area"></div>
+    <script>
+        function test1(){
+            document.querySelector("#area1").innerHTML += "test1() 함수 실행됨<br>";
+        // 선택자를 이용해서 요소를 가져오고자 할 때 사용 : .querySelector("선택자");
+        }
+    </script>
+    <!-- 함수 이름만 쭉 저장해놓고 나중에 스크립트에서 찾아서 실행함 -->
+    <!-- 함수를 필요한 곳에 가져다 쓸 수 있음 -->
+
+    <br>
+
+    <h3>*익명 함수(이름이 없는 함수)</h3>
+    <!-- 이벤트에 바로 연결 / 변수에 바로 담아서 쓰는 함수이기 때문에 이름이 필요 없음 -->
+    <pre>
+        변수 | 속성 = function([매개변수, 매개변수...]){
+            해당 함수 호출 시 실행할 코드;
+
+            [return 결과값;]
+        }
+
+        특정 변수나 속성에 대입 되는 함수 제시 시 주로 사용
+        (주로 이벤트 핸들러(이벤트 발생 시 실행할 함수) 작성 시 사용)
+    </pre>
+
+    <button id="btn">실행확인</button>
+    <div id="area2" class="area"></div>
+    <script>
+        const btn = document.getElementById("btn"); // button 요소 객체
+        btn.onclick = function(){
+            document.getElementById("area2").innerHTML += "이벤트 핸들러를 통해 실행됨 <br>";
+        } // 익명 함수 => 이름이 없어서 직접 호출 불가
+            // 이벤트 속성에 대입 되는 function == 이벤트 핸들러
+        // 이름이 필요한 이유는 다시 불러와서 사용하기 위함
+    </script>
+
+    <hr>
+
+    <h2>함수의 매개변수</h2>
+
+    <button onclick="test2('안녕하세요');">실행 확인</button>
+    <button onclick="test2(10);">실행 확인</button>
+    <button onclick="test2([1,2,3]);">실행 확인</button>
+    <button onclick="test2(true);">실행 확인</button>
+
+    <br>
+
+    <button onclick="test2(prompt('이름을 입력해주세요'));">실행 확인</button>
+    <button onclick="test2('안녕하세요', '반갑습니다.');">실행 확인</button>
+    <button onclick="test2(10, true, '안녕');">실행 확인</button>
+    <!-- 자바는 오버로딩 지원, 하지만 자바스크립트는 기본적으로 다 let임 -->
+    <!-- 받아주는 인자가 현재 1개이므로 데이터를 다 받아주기는 하나 표현은 앞의 1개만 됨 -->
+
+    <div id="area3" class="area"></div>
+    <script>
+        function test2(value, value2){
+            console.log(arguments); // 함수 호출 시 전달 되는 값은 내부적으로 arguments 배열에 담김
+            // 내가 실제 사용하지 않고 변수에만 들어있는 값들도 arguments가 전부 보유하고 있음
+            document.getElementById("area3").innerHTML = value;
+            // 인자 자료형도 어차피 다 let으로 바뀌어 들어옴 (const도 가능은 함)
+        }
+    </script>
+
+    <!-- this : 현재 요소 객체 -->
+    <!-- 자바 스크립트는 모든 영역에서 this를 쓸 수 있음 / 나를 누가 호출했는가 -->
+    <!-- 이 함수를 누가 호출했는가가 this, test1()을 button1, button2가 호출하면 각각의 this는 button1, button2 -->
+    <!-- window 객체 위에서 자바스크립트가 돌고, 하위인 document와 함께 모든 객체가 this가 될 수 있음
+            => 어떤 this인지 명확하게 알고 써야 함 -->
+    
+    <button id="button1" onclick="test3(this.innerHTML);">1</button>
+    <button onclick="test3(this.innerHTML);">2</button>
+    <input type="button" value="3" onclick="test3(this.value);">
+    <button id="btn4" onclick="test3(this.innerHTML);">4</button>
+
+    <!-- 메소드(자바스크립트 영역)을 호출한 게 html영역 -->
+    <script>
+        function test3(a){
+            console.log(a); 
+            // 버튼1 이 결과로 나옴, test3()을 호출한 것이 #button1이므로 this를 넣어줬을 때 버튼1이 나오는 것
+            console.log(a.innerHTML); 
+        }
+    </script>
+
+    <button onclick="test4(this)">클릭</button>
+    <script>
+        function test4(el){
+            if(el.style.background !== "red"){
+                el.style.background = "red";
+                el.innerHTML = "클릭됨";
+            } else {
+                el.style.background = "white";
+                el.innerHTML = "클릭";
+            }
+        }
+    </script>
+
+    <hr>
+    <br>
+
+    <h2>함수의 리턴</h2>
+    <h3>*일반적인 값 리턴</h3>
+
+    <button onclick="test5()">실행</button>
+    <div id="area5" class="area"></div>
+
+    <script>
+        function ran(){
+            const random = parseInt(Math.random() * 100 + 1);
+            // 올림 내림 혹은 int로 / parseDouble 등 다 있음
+            return random;
+        }
+
+        function test5(){
+            document.querySelector("#area5").innerHTML += ("랜덤값 : " + ran() + "<br>");
+        }
+    </script>
+    <!-- 변수에 함수를 담을 수 있음 -->
+
+    <h3>*함수를 리턴</h3>
+    이름 : <input type="text" id="userName">
+    <button onclick="test6()()">실행</button>
+    <script>
+        function test6(){
+            const inputE1 = document.getElementById("userName");
+            let alFunk = function(){
+                alert(inputE1.value);
+            }
+            return alFunk;
+        }
+
+        // customerCallback({id: "user1", pwd: "1234"}, function(result))
+
+        // function customerCallback(data, callback){
+
+        // }
+        // 요청한 데이터를 서버가 처리하기 전까지 기다리면서 다른 코드를 실행함?
+    </script>
+</body>
+</html>

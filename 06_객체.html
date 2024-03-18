@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .area{
+            background-color: aliceblue;
+            border: 1px solid burlywood;
+        }
+
+        .small{height: 250px;}
+        .big{height: 400px;}
+    </style>
+</head>
+<body>
+    <!-- 자바 스크립트의 모든 데이터는 사용자에게 보여주는 것 -->
+    <!-- 같은 데이터를 형식을 다르게 보여줄 수 있음 => 자바 스크립트는 보여주는 것을 달리 하는 것 -->
+    <!-- 자바에서의 객체는 기능이 중요함, 이 필드를 가지고 사용할 수 있는 메소드가 어떤 것이 있는지가 중요했음 -->
+    <!-- 똑같은 데이터라고 하더라도 프론트에서 사용할 데이터가 달라짐 -->
+    <!-- 데이터를 통으로 전달 받아서 내가 필요한 것들만 쌓아서 키값 형태로 저장 -->
+
+    <h1>객체</h1>
+
+    <h3>*객체 선언 및 사용</h3>
+    <p>
+        객체는 중괄호 {}를 사용해서 생성하고, <br>
+        중괄호 안에 이 객체에서 필요한 속성들을 정의 <br>
+        속성명 : 속성값 (key : value) 의 형태로 정의 <br>
+        속성값으로는 모든 자료형의 값을 담을 수 있음 
+    </p>
+    <!-- 변수, 함수, 배열, 기타 등등 전부 다 -->
+
+    <pre>
+        변수 = {
+            속성명 : 속성값,
+            속성명 : 속성값,
+            속성명 : 속성값,
+            ...
+        }
+    </pre>
+
+    <button onclick="test1()">실행</button>
+    <div id="area1" class="area big"></div>
+
+    <script>
+        function test1(){
+            const arr = ["Dry Mango", 4000, "pickle", ["mango", "sugar"]];
+            // 배열 자리에도 변수가 들어가는 것이므로 배열도 뭐든 들어갈 수 있음
+            // 자바 스크립트의 배열 == 자바의 컬렉션(ArrayList)와 유사
+
+            const product = {
+                pName : "Dry Mango",
+                price : 4000,
+                kind : "pickle",
+                ingredient : ["mango", "sugar"],
+                // "age!!" : 22; => !!를 "" 안에 넣어도 오류는 안 나지만 변수명을 이렇게 짓진 않음 
+            };
+            // 속성명은 반드시 숫자 등이 아닌 문자열로 제시해야 함
+            // product.price가 어떤 데이터인지 훨씬 알기 쉬움
+
+            // 자바 스크립트에서의 객체 == 자바에서의 컬렉션(HashMap)과 유사
+            // 변수에도 기능이 들어갈 수 있음, 따라서 객체로 사용 가능
+
+            console.log(typeof product);
+            const area1 = document.getElementById("area1");
+            area1.innerHTML += ("product : " + product + "<br>");
+            // 자바와 똑같이 toString() 메소드가 호출되는 것, 참조변수 주소값이 호출됨
+
+            // 객체의 속성에 접근하는 방법
+            // 방법1. 대괄호를 이용하는 방법 : 객체명["속성명"]
+
+            area1.innerHTML += `<b>객체명['속성명(key)']으로 접근하기</b><br>`;
+            area1.innerHTML += `pName : ${product['pName']}<br>`;
+            area1.innerHTML += `price : ${produc t['price']}<br>`;
+            area1.innerHTML += `ingredient : ${product['ingredient'][0]}<br><br>`;
+        
+            // 방법2. .을 이용해서 접근하는 방법 : 객체명, 속성명(key)
+            area1.innerHTML += `<b>객체명.'속성명(key)'으로 접근하기</b><br>`;
+            area1.innerHTML += `pName : ${product.pName}<br>`;
+            area1.innerHTML += `price : ${product.price}<br>`;
+            area1.innerHTML += `ingredient : ${product.ingredient[1]}<br><br>`;
+        }
+    </script>
+
+    <h3>*객체의 메소드 속성</h3>
+    <p>객체의 속성 중 함수자료형인 속성을 메소드라고 부름</p>
+
+    <button onclick="test4()">실행확인</button>
+    <div id="area4" class="area small"></div>
+
+    <script>
+        function test4(){
+            const area4 = document.getElementById("area4");
+
+            const name = "전은지";
+
+            const dog = {
+                name : "쿠키",
+                kind : "장모치와와",
+                eat : function(food){
+                    area4.innerHTML += `${this.kind} 종류인 ${this.name}가 ${food}를 먹고 있습니다.<br>`
+                // getter setter 역할을 하는 것
+                // 자바와는 달리 내 것이 아닌 정보를 함수 바깥에서 가져오므로 이상한 편
+                }
+            };
+            dog.eat("사과");
+            // 자바 스크립트는 내 위에 있는 코드면 다 사용할 수 있음
+        }
+    </script>
+
+    <br>
+    <hr>
+    <br>
+
+    <h3>*객체 배열을 사용한 다량의 데이터 관리</h3>
+
+    <button onclick="test5()">실행</button>
+    <div id="area5" class="area small"></div>
+
+    <script>
+
+        // function getStudentList(callBack){
+        //     // 서버에 요청
+        //     // 0.2초
+        //     // 서버에 요청 도착
+        //     const result = {
+        //         // 도착한 데이터
+        //     }
+
+        //     callback(result);
+            
+        // }
+
+        // function test5(){
+        //     // 학생리스트
+        // getStudentList(function(getStudentList){
+        //     console.log(studentList);
+        // })
+        // }
+
+        function test5(){
+            const studentList = [
+                {name: "이지수", java: 100, oracle: 75, html: 40},
+                {name: "전은지", java: 80, oracle: 35, html: 40},
+                {name: "서지안", java: 90, oracle: 80, html: 50},
+                {name: "윤현지", java: 55, oracle: 85, html: 70} 
+        ]
+
+        // getSum : 모든 정수의 합
+        // getAvg : 모든 정수의 평균
+        // 서버에서는 합과 평균까지 저장하지 않음, 계속 변동되는 데이터이기 때문에
+        // 보여줄 때 계산만 하면 됨 => 프론트에서 그때그때 계산하는 게 좋음
+
+        // for(let i = 0; i < studentList.length; i++) { // 0 1 2 3
+
+        // }
+
+        for(let i in studentList) { // 0 1 2 3 => 위의 for문과 똑같은 말, 0부터 studentList 길이까지
+            studentList[i].getSum = function(){
+                return this.java + this.oracle + this.html;
+            } // i번째 데이터에 getSum 함수를 이런 식을 정의해서 넣어줘라
+
+            studentList[i].getAvg = function(){
+                return this.getSum() / 3;
+            }
+        }
+        console.log(studentList);
+
+        // area5의 content에 이름 : xxx, 총점 : xxx, 평균 : xxx
+        // for(let i in studentList) {
+        //     studentList[i].content = function(){
+        //         return "이름 : " + this.name + ", 총점 : " + this.getSum + ", 평균 : " + this.getAvg;
+        //     }
+        // }
+        // console.log(studentList.content)
+
+        const area5 = document.querySelector('#area5');
+        for(let i in studentList) { // 0 1 2 3
+            studentList[i].name;
+            studentList[i].getSum();
+            studentList[i].getAvg();
+
+            area5.innerHTML += `이름 : ${studentList[i].name}, 
+                                총점 : ${studentList[i].getSum()},
+                                평균 : ${studentList[i].getAvg()}<br>`;
+        }
+        // NaN : Not a Number, 숫자 타입
+        // getSum()을 getSum으로 하면 함수식 그 자체로 인식하는데 3으로 나누긴 해서 값은 없는데 숫자 타입이라고 알려주는 것
+        }
+    </script>
+</body>
+</html>
