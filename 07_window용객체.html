@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>window용 객체</title>
+</head>
+<body>
+    <h1>window 객체</h1>
+    <p>
+        window 객체는 자바 스크립트 최상위 객체이며 BOM, DOM 으로 나뉨
+        - BOM(Browser Object Model) : location 객체(주소창 관리), screen 객체(브라우저 창 관련), navigator 객체(브라우저 관련)
+        - DOM(Document Object Model) : document 객체
+        <!-- bom : browser object model -->
+        <!-- 구조로 쭉 짜여진 것들이 DOM, html로 짠 것들 요소 하나하나가 DOM, 브라우저의 코드 영역이 다 DOM -->
+        <!-- DOM 안의 것들은 document 하나로 사용함 -->
+        <!-- BOM은 각자 다른 객체 이름으로 자주 부르기 때문에 용어 자체를 사용할 일은 잘 없음 -->
+    </p>
+
+    <h4>- [window.]open(["url", "창의특성"])</h4>
+    <!-- window 객체는 생략 가능 -->
+    <!-- 하지만 보통 open은 window를 써서 표기함 -->
+    <!-- 새 창을 열어주는 기능 -->
+    <button onclick="test1()">네이버</button>
+    <script>
+        function test1(){
+            // window.open(); 새 브라우저 창 열림
+
+            // window.open(첫 번째, 두 번째, 세 번째);
+            // 첫 번째 : 새 창에서 열고자 하는 url 주소
+            // window.open("http://www.naver.com");
+            // 두 번째 : 창의 이름, 같은 이름의 창이 이미 열려 있을 경우 새로운 창이 열리지 않고 이미 열려있는 창이 새로고침 됨
+            // window.open("http://www.naver.com", "naver"); // 중복으로 열리는 것을 방지
+            // 세 번째 : 새 창의 너비, 높이, 주소창 여부, 툴바 여부, 스크롤 여부 등등 새로운 창의 특성(브라우저마다 적용이 다름)
+            // 옵션 / 크롬, 웨일 등의 새로운 창은 안 열릴 수 있음
+
+            /*
+                창의 특성
+                width : 너비(px)
+                height : 높이(px)
+
+                => yes | no
+                resizable : 창의 크기 조절 가능 여부
+                location : 주소창
+                menubar : 메뉴바
+                scrollbars : 스크롤바
+                status : 상태표시줄 // 창의 비율 같은 것
+                toolbar : 도구 모음
+            */
+
+            // 크롬 : 주소창 수정 X, toolbar, status, menubar X
+            window.open("http://www.naver.com", "naver", "width=500, height=600, resizable=no, location=yes, menubar=yes, status=yes, toolbar=yes")
+            // 500만 입력하면 px로 인식해서 넣어줌
+        }
+    </script>
+
+    <hr>
+
+    <h3>window 객체의 timer 관련 메소드</h3>
+    <h4>window.setTimeOut(함수, 시간ms)</h4> <!-- 일정시간 후에 함수를 딱 한 번만 실행해달라는 것-->
+    <!-- 인자로 함수 자체가 들어오는 것 -->
+    <!-- 1000ms가 1s -->
+    <button onclick="test2()">실행</button>
+
+    <script>
+        function test2(){
+            // const myWindow = window.open();
+
+            // // myWindow.close();
+            // // 창이 종료됨
+
+            // // 3초 후에 페이지 종료
+            // // window.close => 내가 보고 있는 창이 꺼짐, window.open()으로 특정 창이 열러있기 때문에 그 변수를 닫아준 것
+
+            // // myWindow.alert("힐다");
+            // // myWindow.close();
+
+            // setTimeout(function(){
+            //     myWindow.close();
+            // }, 3000) // 1s === 1000ms
+
+            console.log("setTimeout 이전");
+
+            setTimeout(function(){
+                console.log("setTimeout 실행")
+            }, 2000)
+            // 콜백이다?
+            // 함수 넘김, 시간 넘김 => 
+
+            console.log("setTimeout 이후");
+            function setTimeout(callback, time){
+                // 시간 지연 -> time (시간차 발생)
+                // 시간 지연 완료
+                callback();
+            }
+
+            // setTimeout : 내가 제시한 일정 시간 후에 해당 함수 "한 번만" 호출
+
+
+            // 실행되길 기다리고 실행하면 멈추는 것, 웹은 멈추면 안 됨
+            // 비동기
+            // 일단 실행 되면서 2초 기다리는 동안 다시 뒤의 코드를 읽어감
+
+            // 자바 스크립트는 하나의 프로세스 당 하나의 흐름, 하지만 두 개의 쓰레드처럼 감
+            
+            // 함수는 처음에 만난 게 마지막으로 끝남 => 스택구조
+            // 이벤트 자료구조는 큐 구조를 따름 (이벤트큐라고 함)
+            // 동시에 일어나는 일들을 줄 세워줄 때 큐 구조를 사용함
+            // ex) 수강신청, 티켓팅
+            // 이벤트가 겹치기 때문에 겹치지 말라고 줄을 세워줌
+            // 이벤트를 클릭하면 실행해야 하는 함수가 쌓임, 차례대로 처리
+
+            // 하지만 비동기는 조금 다름
+            // 비동기가 만약 2초를 기다리게 되면 다른 것들을 실행하지 못함
+            // 따라서 기다리는 함수를 다시 이벤트큐에 넣어버림, 2초동안 큐 구조 안에서 기다리는 것
+            // 그러면 함수 실행에서는 다른 함수를 먼저 처리해주는 것
+            // 기다리는 함수가 2초가 지나면 다시 큐 구조에서 함수 실행 공간에 넣어줌
+
+            // 자바스크립트로 만든 서버 : 로드서버?
+            // 로드 서버의 한계가 이런 점에 있음
+        }
+    </script>
+
+    <br>
+
+    <!-- setTimeout과 다르게 반복적으로 실행 -->
+    <h4>- window.setInterval(함수, 시간ms)</h4>
+    <button onclick="test3()">실행</button>
+    <div id="area1" class="area"></div>
+
+    <script>
+        function test3(){
+            const area1 = document.getElementById('area1');
+            // 1초마다 카운트 값 1씩 증가 => 스탑워치처럼
+            let count = 0;
+            setInterval(function(){
+                // // area1.innerHTML = count++;
+                // // 함수실행이 되는 동안 중간중간 끼어들어서 1씩 증가시키는 것
+                // // 성능이 별로 좋지 못함
+
+                // // 시계 만들기
+                // const now = new Date();
+
+                // // 각각 현재 시각, 분, 초 값을 꺼내주는 함수
+                // let hour = now.getHours();
+                // let min = now.getMinutes();
+                // let sec = now.getSeconds();
+
+                // area1.innerHTML = hour + " : " + min + " : " + sec;
+                area1.innerHTML = getNowTimeHHMMSS();
+            }, 1000);
+        }
+        
+        function getNowTimeHHMMSS(/*time*/){
+            const now = new Date();
+            // const now = time ? new Date(time) : new Date();
+
+                let hour = now.getHours();
+                let min = now.getMinutes();
+                let sec = now.getSeconds();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+                if(hour < 10) {
+                    hour = "0" + hour;
+                }
+                if(min < 10) {
+                    min = "0" + min;
+                }
+                if(sec < 10) {
+                    sec = "0" + sec;
+                }
+
+                const time = hour + " : " + min + " : " + sec;
+                return time;
+            }
+            // 필요한 것들을 함수로 만들어놓고 가져다 씀
+    </script>
+
+    <hr>
+    
+    <h1>* BOM(Browser Object Model) </h1>
+
+    <h3>location 객체</h3>
+    <p>브라우저 주소창과 관련된 객체</p>
+    <button onclick="console.log(location)">실행확인</button>
+    <!-- 내 위치 정보에 관한 것들이 나옴, 어느 영역에서 접속한 것인지에 대한 정보 -->
+
+    <a href="http://www.naver.com">네이버로 이동</a>
+    <!-- 정보가 바뀌었을 것 -->
+    <button onclick="location.href='http://www.naver.com'">네이버로 이동</button>
+    <!-- a, button 둘 다 똑같은 기능을 하는 태그 -->
+    <!-- a는 href 정보값을 바꿔주는 태그 -->
+
+    <button onclick="location.assign('http://www.google.com')">구글로 이동</button>
+    <!-- assign() : href 정보를 바꿔주는 함수 -->
+    <!-- 뒤로가기 지원 -->
+
+    <button onclick="location.replace('http://www.google.com')">구글로 이동</button>
+    <!-- replace는 뒤로가기를 사용할 수 없도록 ip와 포트 이외의 경로를 삭제함 -->
+
+    <br><br>
+
+    <button onclick="location.href=location.href">새로고침</button>
+    <!-- location.href : 지금 내 현 주소를 가리킴, 내 주소를 다시 내 주소로 바꿔라 => 새로고침 -->
+    <button onclick="location.reload()">새로고침</button>
+    <!-- reload는 현재 정보값을 그대로 둔 채 새로고침함 : 스크롤이 다시 위로 가는 등 -->
+
+    <br><br><br>
+
+    <h3>screen 객체</h3>
+    <button onclick="console.log(screen)">screen 객체 확인</button>
+    <!-- 앱 화면이 안 되는 경우 웹으로 다시 접속해달라고 뜸, 그럴 때 screen에서 전체 창 너비 확인해서 넘기는 것 -->
+
+    <h3>navigator 객체</h3>
+    <button onclick="console.log(navigator)">navigator 객체 확인</button>
+    <!-- 사용자 위치 정보로 인증하는 경우(이 동네에 사는지 확인) -->
+    <!-- 위치정보 제공하는 경우 이 객체로 가능 -->
+
+    <h3>history 객체</h3>
+    <button onclick="console.log(history)">history 객체 확인</button>
+    <!-- 내가 방문했던 사이트들을 참조하는 경우 -->
+    <!-- 뒤로가기 같은 기능 구현 가능 -->
+
+    <h1>DOM 구성하기</h1>
+    <p>
+        HTML에 있는 각각의 요소들을 노드(Node)라고 함 <br>
+        <!-- nodejs? / 자료 구조들에 나오는 요소들 을 보통 많이 떠올림, html 요소들은 노드라고 잘 말하지 않음-->
+        > 요소노드(Element Node) : 태그 그 자체만을 의미 <br>
+        > 텍스트노드(Text Node) : 태그 내에 기록되는 내용 <br><br>
+        <!-- 단일태그(input, img)는 당연히 중간 텍스트가 없음 -->
+    </p>
+
+    <button onclick="test4()">Element 직접 생성</button>
+
+    <div id="area2"></div>
+    <script>
+        function test4(){
+            // <h3>안녕하세요</h3>
+
+            // 동적으로 요소를 만드는 방법 1. "문자열" // innerHTML
+            document.getElementById("area2").innerHTML = "<h3>안녕하세요</h3>";
+            // 요소를 텍스트로 만들어서 넣어줬음
+            // 문자열은 실수해도 오류를 알려주지 않음
+
+            // 동적으로 요소를 만드는 방법 2. document에서 제공하는 메소드를 통해서 생성
+            let h3E1 = document.createElement("h3"); // <h3></h3>
+            // html 코드가 아니니까 innerHTML을 사용할 수 있는 코드가 아님
+            // document.createTextNode => 잘 사용 안 함
+            h3E1.innerText = "안녕하세요."; // <h3>안녕하세요.</h3>
+            h3E1.innerHTML = "안녕하세요?";
+            document.getElementById("area2").appendChild(h3E1); // appendChild 맨 마지막 자식 요소로 추가
+            // 넣으려는 문자열이 엄청 길어질 수 있음
+        }
+    </script>
+</body>
+</html>

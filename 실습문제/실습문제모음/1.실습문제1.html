@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #div1{
+            border: 1px solid red;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend>취미</legend>
+        <form action="">
+            <input type="checkbox" name="hobby" id="select-all" value="전체선택" onchange="checkAll()">
+            <label for="select-all">전체선택</label>
+            <input type="checkbox" name="hobby" id="genre" value="종합" onchange="checkSelect()">
+            <label for="genre">종합</label>
+            <input type="checkbox" name="hobby" id="nobel" value="소설" onchange="checkSelect()">
+            <label for="nobel">소설</label>
+            <input type="checkbox" name="hobby" id="poem-essay" value="시/에세이" onchange="checkSelect()">
+            <label for="poem-essay">시/에세이</label>
+            <input type="checkbox" name="hobby" id="economy" value="경제/경영" onchange="checkSelect()">
+            <label for="economy">경제/경영</label>
+            <input type="checkbox" name="hobby" id="self-develop" value="자기계발" onchange="checkSelect()">
+            <label for="self-develop">자기계발</label>
+            <input type="checkbox" name="hobby" id="child" value="아동" onchange="checkSelect()">
+            <label for="child">아동</label> <br>
+            <input type="checkbox" name="hobby" id="trip" value="여행" onchange="checkSelect()">
+            <label for="trip">여행</label>
+            <input type="checkbox" name="hobby" id="science" value="과학" onchange="checkSelect()">
+            <label for="science">과학</label>
+            <input type="checkbox" name="hobby" id="culture" value="역사/문화" onchange="checkSelect()">
+            <label for="culture">역사/문화</label>
+            <input type="checkbox" name="hobby" id="language" value="외국어" onchange="checkSelect()">
+            <label for="language">외국어</label>
+            <input type="checkbox" name="hobby" id="computer" value="컴퓨터" onchange="checkSelect()">
+            <label for="computer">컴퓨터</label>
+            <input type="checkbox" name="hobby" id="comic" value="만화" onchange="checkSelect()">
+            <label for="comic">만화</label>
+        </form>
+    </fieldset> <br>
+
+    <button onclick="selectCategory()">카테고리 선택</button>
+    <div id="div1"></div>
+
+    <script>
+        function selectCategory(){
+            const divE1 = document.getElementById("div1");
+            const hobby = document.getElementsByName("hobby");
+            // hobby 값들이 배열에 담겼을 것
+
+            for(let hobbyList of hobby){
+                // console.log(hobbyList);
+                // // 배열을 하나씩 꺼내서 hobbyList에 담음
+
+                // console.log(hobbyList.checked);
+                // // hobbyList의 checked 속성을 출력 => true false
+
+                if(hobbyList.checked) {
+                    divE1.innerHTML += (hobbyList.value + " ");
+                    console.log(hobbyList.value);
+                    // value 값을 안 넣어줬으니까 당연히 value 값이 이상하게 나오지...
+                }
+            }
+        }
+
+        // 1. 전체선택을 체크한 경우
+
+        function checkAll(){
+            const selectAll = document.getElementById("select-all");
+            const hobbyList = document.getElementsByName("hobby");
+            if (selectAll.checked){
+                for(let checkList of hobbyList){
+                    checkList.checked = true;
+                }
+            } else {
+                for(let checkList of hobbyList){
+                    checkList.checked = false;
+                }
+            }
+        }
+
+        // 2. 전체선택 이외의 모든 체크박스를 선택한 경우
+
+        function checkSelect(){
+            let result = true;
+            const hobbyList = document.getElementsByName("hobby");
+            for(let checkList of hobbyList){
+                if(checkList.value === 전체선택) {
+                    continued;
+                }
+                if(!checkList.checked) {
+                    result = false;
+                }
+            }
+            
+        }
+
+
+
+        // function selectCategory(){
+        //     const divE1 = document.getElementById("div1");
+            
+        //     divE1.innerHTML = hobby();
+        // }
+
+        // function hobby(){
+        //         let result = null;
+        //         let check = document.getElementsByName("hobby");
+        //         for (let checkbox of check) {
+        //             if (checkbox.checked) {
+        //                 console.log(checkbox.checked);
+        //                 console.log(checkbox);
+        //                 result += checkbox.innerText;
+        //             }
+        //         }
+        //         console.log(result);
+        //         return result;
+        //     }
+    </script>
+</body>
+</html>

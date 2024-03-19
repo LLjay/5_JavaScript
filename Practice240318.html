@@ -6,6 +6,20 @@
     <title>Document</title>
 </head>
 <body>
-    
+
+    <button onclick="student()"></button>
+    <script>
+        const student = {name: "이지수", age: 27, hobby: "music"};
+
+        // 객체들을 전부 배열에 넣을 거니까 []
+        const studentList = [
+            {name: "이지수", age: 27, hobby: "music"},
+            {name: "전은지", age: 30, hobby: "game"}
+        ]
+
+        function student(){
+            console.log(studentList[0].name);
+        }
+    </script>
 </body>
 </html>
