@@ -1,0 +1,102 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    color: #222;
+    font-size: 15px;
+    margin: 0px;
+    padding: 0px;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+ul, ol, li{
+    list-style: none;
+}
+
+img{
+    border-style: none;
+}
+
+h1{
+    font-size: 52px;
+    font-weight: 900;
+    text-align: center;
+    margin: 0px;
+}
+
+.main{
+    min-height: 100vh;
+    /* 100%로 채우겠다는 뜻? */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main .container{
+    display: inline-flex;
+    justify-content: center;
+}
+/* 안 겹치기 위해 .main으로 찝어서 하나하나 넣어주는 것 */
+.main #search-bar{
+    width: calc(100% - 24px);
+    padding: 24px 0px;
+}
+
+.main #search-bar>input{
+    min-width: 250px;
+    height: 40px;
+    padding: 6px 12px;
+    border-radius: 50px 0px 0px 50px;
+    border: none;
+    background-color: #f4f4f4;
+    outline: none;
+}
+
+.main #search-bar>button{
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    border-radius: 0px 50px 50px 0px;
+}
+
+.main #search-bar > button:hover{
+    background-color: #dddddd;
+}
+
+.todo-list{
+    width: 100%;
+    margin: 12px 0px;
+    padding: 0px 30px;
+}
+
+.todo-list > li{
+    height: 34px;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.todo-list > li.done{
+    text-decoration: line-through;
+}
+
+.todo-list > li > .todo-remove-btn{
+    cursor: pointer;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0px;
+    background-color: rgb(174, 201, 219);
+}
